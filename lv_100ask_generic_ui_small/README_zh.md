@@ -8,6 +8,12 @@
 6. 在main函数调用入口接口函数
 7. 编译运行，查看效果。
 
+> 注意：一些页面使用到了 lv_lib_100ask 仓库，因此同时需要加入此仓库到你的工程当中。
+
+lv_lib_100ask仓库地址：
+
+- GitHub： [https://github.com/100askTeam/lv_lib_100ask](https://github.com/100askTeam/lv_lib_100ask)
+- Gitee： [https://gitee.com/weidongshan/lv_lib_100ask](https://gitee.com/weidongshan/lv_lib_100ask)
 
 # 演示视频
 

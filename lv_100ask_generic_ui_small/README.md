@@ -8,6 +8,12 @@
 6. Call the entrance interface function in the main function
 7. Compile and run, check the effect.
 
+> Note: Some pages are using the lv_delab_100ask repository, so it needs to be added to your project at the same time.
+
+lv_lib_100ask repositorie:
+
+- GitHub: [https://github.com/100askTeam/lv_lib_100ask](https://github.com/100askTeam/lv_lib_100ask)
+- Gitee: [https://gitee.com/weidongshan/lv_lib_100ask](https://gitee.com/weidongshan/lv_lib_100ask)
 
 # Video
 
