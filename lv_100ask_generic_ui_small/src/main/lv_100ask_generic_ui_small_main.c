@@ -58,7 +58,7 @@
 /*********************
  *      DEFINES
  *********************/
-#define APP_A_ROW_OF_TOTAL      3
+#define APP_A_ROW_OF_TOTAL                          3
 
 #if LV_100ASK_GENERIC_UI_SMALLE_HAS_DESKTOP_BG
 LV_IMG_DECLARE(img_desktop_bg);
@@ -270,13 +270,8 @@ void lv_100ask_generic_ui_small(void)
     for(i = 0; i < favorites_app_total; i++) {
         image = lv_image_create(cont_recent_app_item);
         //lv_obj_set_size(image, 96, 96);
-        lv_image_set_src(image, all_app_icon_list[0]);
-        lv_obj_set_user_data(image, all_app_list[0]);
-        if(i < favorites_app_total)
-        {
-            lv_image_set_src(image, all_app_icon_list[i]);
-            lv_obj_set_user_data(image, all_app_list[i]);
-        }
+        lv_image_set_src(image, favorites_app_icon_list[i]);
+        lv_obj_set_user_data(image, favorites_app_list[i]);
         lv_obj_add_flag(image, LV_OBJ_FLAG_CLICKABLE);
         lv_obj_add_event_cb(image, app_icon_event_cb, LV_EVENT_CLICKED, g_lv_100ask_desktop_data.cont_desktop);
     }
@@ -343,13 +338,8 @@ void lv_100ask_generic_ui_small(void)
         else
         {
             image = lv_image_create(cont_secondary_desktop);
-            lv_image_set_src(image, all_app_icon_list[0]);
-            lv_obj_set_user_data(image, all_app_list[0]);
-            if(i < favorites_app_total)
-            {
-                lv_image_set_src(image, all_app_icon_list[i]);
-                lv_obj_set_user_data(image, all_app_list[i]);
-            }
+            lv_image_set_src(image, all_app_icon_list[i]);
+            lv_obj_set_user_data(image, all_app_list[i]);
             lv_obj_add_flag(image, LV_OBJ_FLAG_CLICKABLE);
             lv_obj_add_event_cb(image, app_icon_event_cb, LV_EVENT_CLICKED, g_lv_100ask_desktop_data.cont_desktop);
         }
