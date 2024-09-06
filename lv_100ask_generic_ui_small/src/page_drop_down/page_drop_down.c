@@ -44,7 +44,7 @@
 
 #include "page_drop_down.h"
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
 #include "driver_lcd_backlight.h"
 #include "driver_passive_buzzer.h"
 #include "driver_ws28xx.h"
@@ -52,7 +52,7 @@
 #include "driver_ec11.h"
 #include "driver_aht20.h"
 
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
 
 #endif
 /*********************
@@ -353,7 +353,7 @@ lv_obj_t * page_drop_down_init(void)
     for(int i = 0; i < 2; i++)
     {
         slider[i] = lv_slider_create(cont_sub);
-        lv_slider_set_range(slider[i], LCD_MIN_BACKLIGHT, LCD_MAX_BACKLIGHT);
+        lv_slider_set_range(slider[i], LV_100ASK_GENERIC_UI_SMALLE_LCD_MIN_BACKLIGHT, LV_100ASK_GENERIC_UI_SMALLE_LCD_MAX_BACKLIGHT);
         lv_slider_set_value(slider[i], 1000, LV_ANIM_OFF);
         lv_obj_set_size(slider[i], lv_pct(40), lv_pct(100));
         lv_obj_align(slider[i], LV_ALIGN_LEFT_MID, (70 * i) + 30, 0);
@@ -377,9 +377,9 @@ lv_obj_t * page_drop_down_init(void)
 #if 1
     cont_sub = lv_obj_create(cont);
     lv_obj_remove_style_all(cont_sub);
-#if LV_100ASK_SCREEN_SIZE_320X480
+#if LV_100ASK_GENERIC_UI_SMALLE_SCREEN_SIZE_320X480
     lv_obj_set_size(cont_sub, 280, LV_SIZE_CONTENT);
-#elif LV_100ASK_SCREEN_SIZE_480X480
+#elif LV_100ASK_GENERIC_UI_SMALLE_SCREEN_SIZE_480X480
     lv_obj_set_size(cont_sub, 390, LV_SIZE_CONTENT);
 #endif
     lv_obj_set_style_bg_color(cont_sub, lv_color_hex(0x686868), 0);
@@ -457,7 +457,7 @@ static void slider_set_brightness_event_handler(lv_event_t * e)
     LV_LOG_USER("LV_EVENT_VALUE_CHANGED: %d%%", slider_value);
 
     //if((slider_value >= 95) || (slider_value <= 11))
-    if((slider_value <= (LCD_MIN_BACKLIGHT + 150)) || (slider_value >= (LCD_MAX_BACKLIGHT - 50)))
+    if((slider_value <= (LV_100ASK_GENERIC_UI_SMALLE_LCD_MIN_BACKLIGHT + 150)) || (slider_value >= (LV_100ASK_GENERIC_UI_SMALLE_LCD_MAX_BACKLIGHT - 50)))
     {
         lv_obj_set_style_opa(slider, LV_OPA_TRANSP, LV_PART_KNOB);
     }
@@ -519,7 +519,7 @@ static void cont_sub_ext_draw_event_handler(lv_event_t * e)
 static void opt_passive_buzzer(uint16_t val)
 {
     LV_LOG_USER("[opt_passive_buzzer] val: %d", val);
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     PassiveBuzzer_Control(val);
 #endif
 }
@@ -527,7 +527,7 @@ static void opt_passive_buzzer(uint16_t val)
 static void opt_ws28xx(uint16_t val)
 {
     LV_LOG_USER("[opt_ws28xx] val: %d", val);
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     ws28xx_all_opt(val);
 #endif
 }
@@ -535,7 +535,7 @@ static void opt_backlight(uint16_t val)
 {
     LV_LOG_USER("[opt_backlight] val: %d", val);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     lcd_backlight_set_value(val);
 #endif
 }

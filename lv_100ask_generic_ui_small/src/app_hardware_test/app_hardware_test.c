@@ -45,7 +45,7 @@
 
 #include "app_hardware_test.h"
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
 #include "driver_passive_buzzer.h"
 #include "driver_ws28xx.h"
 #include "driver_ir_receiver.h"
@@ -53,7 +53,7 @@
 #include "driver_aht20.h"
 #include "driver_w800.h"
 
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
 
 #endif
 
@@ -554,12 +554,12 @@ static void update_humiture_timer(lv_timer_t * timer)
     lv_chart_series_t * ser_temp = lv_chart_get_series_next(chart_temp, NULL);
     lv_chart_series_t * ser_humid = lv_chart_get_series_next(chart_humid, NULL);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     aht20_update();
     aht20_get_datas(&temp, &humi);
     temp = temp / 10;
     humi = humi / 10;
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     temp = lv_rand(20, 34);
     humi = lv_rand(60, 80);
 #endif
@@ -618,18 +618,18 @@ static void btn_lamp_event_handler(lv_event_t * e)
 
     if(lv_obj_has_state(btn, LV_STATE_CHECKED))
     {
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     WS28XX_SetPixel_RGB_565(&WS28xx_Handle, pixel_index, lv_color_to_u16(g_lv_100ask_app_hw_test_data.lamp_color));
     WS28XX_Update(&WS28xx_Handle);
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     LV_LOG_USER("pixel_index:%d", pixel_index);
 #endif
     }
     else{
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     WS28XX_SetPixel_RGB_565(&WS28xx_Handle, pixel_index, 0x000000);
     WS28XX_Update(&WS28xx_Handle);
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     LV_LOG_USER("pixel_index:%d", pixel_index);
 #endif
     }
@@ -642,7 +642,7 @@ static void btn_buzzer_event_handler(lv_event_t * e)
 {
     lv_obj_t * btn = lv_event_get_target(e);
     
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     PassiveBuzzer_Control(lv_obj_has_state(btn, LV_STATE_CHECKED));
 #endif
 }
@@ -655,13 +655,13 @@ static void update_ir_rec_timer(lv_timer_t * timer)
     /*Use the user_data*/
     lv_obj_t * label = lv_timer_get_user_data(timer);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     uint8_t dev, data;
     if (!IRReceiver_Read(&dev, &data))
         lv_label_set_text_fmt(label, "IR-Receiver code:   %s", IRReceiver_CodeToString(data));
     //else
     //    lv_label_set_text_fmt(label, "IR-Receiver code:   %s", "Error");
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     const char *names[21]= {"Power", "Menu", "Test", "+", "Return", "Left", "Play", "Right", \
                             "0", "-", "C", "1", "2", "3", "4", "5", \
                             "6", "7", "8", "9", "Repeat"};
@@ -680,7 +680,7 @@ static void update_w800_at_timer(lv_timer_t * timer)
     /*Use the user_data*/
     lv_obj_t * label = lv_timer_get_user_data(timer);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     uint8_t str_tmp[8] = "AT+\r";
 
     HAL_UART_Transmit(&huart7, str_tmp, 4, 10);
@@ -689,7 +689,7 @@ static void update_w800_at_timer(lv_timer_t * timer)
     lv_label_set_text_fmt(label, "W800 AT Test11:    %s", str_tmp);
     
     test_res = strstr(str_tmp, "+OK");
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     char *str_tmp[2]= {"+OK\r\n", "ERROR"};
 
     test_res = strstr(str_tmp[lv_rand(0, 1)], "+OK");
@@ -714,7 +714,7 @@ static void update_key_timer(lv_timer_t * timer)
     /*Use the user_data*/
     lv_obj_t * cont_sub = lv_timer_get_user_data(timer);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     if      (GPIO_PIN_RESET == HAL_GPIO_ReadPin(USER_KEY1_GPIO_Port, USER_KEY1_Pin))    key_index = 0;
     else if (GPIO_PIN_RESET == HAL_GPIO_ReadPin(USER_KEY2_GPIO_Port, USER_KEY2_Pin))    key_index = 1;
     else if (GPIO_PIN_RESET == HAL_GPIO_ReadPin(USER_KEY3_GPIO_Port, USER_KEY3_Pin))    key_index = 2;
@@ -725,7 +725,7 @@ static void update_key_timer(lv_timer_t * timer)
         btn = lv_obj_get_child(cont_sub, key_index);
         lv_obj_add_state(btn, LV_STATE_CHECKED);
     }
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     key_index = lv_rand(0, 3);
 
     btn = lv_obj_get_child(cont_sub, key_index);
@@ -742,7 +742,7 @@ static void update_ec11_timer(lv_timer_t * timer)
     /*Use the user_data*/
     lv_obj_t * arc = lv_timer_get_user_data(timer);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     int8_t encoder_diff = ec11_scan();
     int32_t last_arc_value = lv_arc_get_value(arc);
     if (encoder_diff == 1)
@@ -754,7 +754,7 @@ static void update_ec11_timer(lv_timer_t * timer)
     {
         lv_arc_set_value(arc, 0);
     }
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     int8_t encoder_diff = lv_rand(0, 2);
     if (encoder_diff == 1)
         lv_arc_set_value(arc, lv_arc_get_value(arc)+10);

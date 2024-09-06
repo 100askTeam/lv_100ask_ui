@@ -269,7 +269,7 @@ static int16_t app_settings_open(void)
     section = lv_menu_section_create(sub_display_brightness_page);
 
     slider = create_slider(section, LV_SYMBOL_EYE_OPEN, "Brightness", 0, 150, 100);
-    lv_slider_set_range(slider, LCD_MIN_BACKLIGHT, LCD_MAX_BACKLIGHT);
+    lv_slider_set_range(slider, LV_100ASK_GENERIC_UI_SMALLE_LCD_MIN_BACKLIGHT, LV_100ASK_GENERIC_UI_SMALLE_LCD_MAX_BACKLIGHT);
     lv_slider_set_value(slider, 1000, LV_ANIM_OFF);
     lv_obj_add_event_cb(slider, slider_set_brightness_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
 
@@ -486,7 +486,7 @@ static void slider_set_brightness_event_handler(lv_event_t * e)
 
     slider_value = lv_slider_get_value(slider);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     lcd_backlight_set_value(slider_value);
 #endif
 }
@@ -517,7 +517,7 @@ static void btn_list_set_auto_lock_event_handler(lv_event_t * e)
 
     img = lv_image_create(btn);
     lv_image_set_src(img, LV_SYMBOL_OK);
-#if LV_100ASK_HAS_LOCK_SCREEN
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_LOCK_SCREEN
     switch (btn_index)
     {
     case 0:
@@ -544,6 +544,7 @@ static void btn_list_set_auto_lock_event_handler(lv_event_t * e)
 
 }
 
+
 static void sw_sysmon_performance_event_handler(lv_event_t * e)
 {
     lv_obj_t * sw = lv_event_get_target(e);
@@ -554,14 +555,18 @@ static void sw_sysmon_performance_event_handler(lv_event_t * e)
         return;
     }
 
+#if LV_USE_PERF_MONITOR  
     if(lv_obj_has_state(sw, LV_STATE_CHECKED))
     {
         lv_sysmon_show_performance(disp);
     }
     else
-    {
-        lv_sysmon_hide_performance(disp);
+    {       
+        lv_sysmon_hide_performance(disp);      
     }
+#else
+#warning "LV_USE_PERF_MONITOR = 0"
+#endif
 }
 
 static void sw_sysmon_memory_event_handler(lv_event_t * e)
@@ -574,6 +579,7 @@ static void sw_sysmon_memory_event_handler(lv_event_t * e)
         return;
     }
 
+#if LV_USE_MEM_MONITOR  
     if(lv_obj_has_state(sw, LV_STATE_CHECKED))
     {
         lv_sysmon_show_memory(disp);
@@ -582,5 +588,9 @@ static void sw_sysmon_memory_event_handler(lv_event_t * e)
     {
         lv_sysmon_hide_memory(disp);
     }
+#else
+#warning "LV_USE_MEM_MONITOR = 0"
+#endif
+
 }
 

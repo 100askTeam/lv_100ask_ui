@@ -41,19 +41,19 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
-#if LV_100ASK_HAS_LOCK_SCREEN != 0
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_LOCK_SCREEN != 0
 
 #include "page_lock_screen.h"
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
 #include "driver_aht20.h"
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
 #endif
 
 /*********************
  *      DEFINES
  *********************/
-#if LV_100ASK_LIMIT_LOCK_SCREEN_PIC
+#if LV_100ASK_GENERIC_UI_SMALLE_LIMIT_LOCK_SCREEN_PIC
     #define MAX_LOCK_SCREEN_IMG     3
 #else
     #define MAX_LOCK_SCREEN_IMG     6
@@ -100,7 +100,7 @@ LV_IMG_DECLARE(img_lock_screen_4);
 LV_IMG_DECLARE(img_lock_screen_5);
 LV_IMG_DECLARE(img_lock_screen_6);
 
-#if LV_100ASK_LIMIT_LOCK_SCREEN_PIC
+#if LV_100ASK_GENERIC_UI_SMALLE_LIMIT_LOCK_SCREEN_PIC
 static const lv_image_dsc_t *g_img_lock_screen[MAX_LOCK_SCREEN_IMG] = {
     &img_lock_screen_1,
     &img_lock_screen_4,
@@ -157,9 +157,9 @@ lv_obj_t * page_lock_screen_init(void)
 
     //////////////////////////////////////
     lv_obj_t * label_humiture = lv_label_create(g_page_lock_screen_data.cont);
-#if LV_100ASK_SCREEN_SIZE_320X480
+#if LV_100ASK_GENERIC_UI_SMALLE_SCREEN_SIZE_320X480
     lv_obj_set_style_text_font(label_humiture, &lv_font_montserrat_14, 0);
-#elif LV_100ASK_SCREEN_SIZE_480X480
+#elif LV_100ASK_GENERIC_UI_SMALLE_SCREEN_SIZE_480X480
     lv_obj_set_style_text_font(label_humiture, &lv_font_montserrat_20, 0);
 #endif    
     lv_obj_set_style_text_color(label_humiture, lv_color_hex(0xf5f5f7), 0);
@@ -266,12 +266,12 @@ static void page_update_pdate_humiture_timer(lv_timer_t * timer)
     /*Use the user_data*/
     lv_obj_t * label_humiture = lv_timer_get_user_data(timer);
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
     aht20_update();
     aht20_get_datas(&temp, &humi);
     temp = temp / 10;
     humi = humi / 10;
-#elif LV_100ASK_DESKTOP_USE_SIMULATOR
+#elif LV_100ASK_GENERIC_UI_SMALLE_USE_SIMULATOR
     temp = lv_rand(20, 34);
     humi = lv_rand(60, 80);
 #endif
@@ -280,4 +280,4 @@ static void page_update_pdate_humiture_timer(lv_timer_t * timer)
 }
 
 
-#endif /* LV_100ASK_HAS_LOCK_SCREEN */
+#endif /* LV_100ASK_GENERIC_UI_SMALLE_HAS_LOCK_SCREEN */

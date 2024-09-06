@@ -45,7 +45,7 @@
 
 #include "../page_lock_screen/page_lock_screen.h"
 
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
 #include "driver_passive_buzzer.h"
 
 #endif
@@ -145,7 +145,7 @@ static void click_check_timer(lv_timer_t * timer)
     if(indev_state == LV_INDEV_STATE_PRESSED)
     {
         set_page_lock_screen_reset();
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
         if(g_lv_100ask_sys_generic_data.sound && (buzzer_state == 0))
         {
             buzzer_state = 1;
@@ -156,7 +156,7 @@ static void click_check_timer(lv_timer_t * timer)
     }
     else if(indev_state == LV_INDEV_STATE_RELEASED)
     {
-#if LV_100ASK_DESKTOP_USE_DshanMCUH7R_NoRTOS
+#if LV_100ASK_GENERIC_UI_SMALLE_DshanMCUH7R_NoRTOS
         if(buzzer_state)
         {
             buzzer_state = 0;

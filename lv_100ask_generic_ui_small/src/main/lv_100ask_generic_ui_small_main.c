@@ -61,7 +61,7 @@
 #define APP_ITEM_TOTAL      14
 #define APP_A_ROW_OF_TOTAL  3
 
-#if LV_100ASK_HAS_DESKTOP_BG
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_DESKTOP_BG
 LV_IMG_DECLARE(img_desktop_bg);
 #endif
 
@@ -142,7 +142,7 @@ void lv_100ask_generic_ui_small(void)
     lv_obj_set_style_opa(buttom_gesture_obj, LV_OPA_TRANSP, 0);
 
     ///////////////////////////////////
-#if LV_100ASK_HAS_LOCK_SCREEN
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_LOCK_SCREEN
     page_lock_screen_init();
     sys_generic_click_check_init();
 #endif
@@ -156,7 +156,7 @@ void lv_100ask_generic_ui_small(void)
     lv_obj_remove_style_all(g_lv_100ask_desktop_data.cont_desktop);
     lv_obj_set_size(g_lv_100ask_desktop_data.cont_desktop, LV_PCT(100), LV_PCT(100));
     lv_obj_center(g_lv_100ask_desktop_data.cont_desktop);
-#if LV_100ASK_HAS_DESKTOP_BG && LV_100ASK_LIMIT_DESKTOP_BG_PIC
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_DESKTOP_BG && LV_100ASK_GENERIC_UI_SMALLE_LIMIT_DESKTOP_BG_PIC
     static lv_color_t grad_colors[2];
 
     grad_colors[0] = lv_color_make(lv_rand(0, 255), lv_rand(0, 255), lv_rand(0, 255));
@@ -186,9 +186,9 @@ void lv_100ask_generic_ui_small(void)
 #endif
 
     //////////////////////////////////////////////////
-#if LV_100ASK_HAS_DESKTOP_BG
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_DESKTOP_BG
 
-#if LV_100ASK_LIMIT_DESKTOP_BG_PIC
+#if LV_100ASK_GENERIC_UI_SMALLE_LIMIT_DESKTOP_BG_PIC
     lv_obj_t * img_bg = lv_obj_create(g_lv_100ask_desktop_data.cont_desktop);
     lv_obj_remove_style_all(img_bg);
     lv_obj_set_size(img_bg, lv_pct(100), lv_pct(100));

@@ -11,7 +11,7 @@ extern "C" {
  *********************/
 #include "../lv_100ask_generic_ui_small.h"
 
-#if LV_100ASK_HAS_LOCK_SCREEN != 0
+#if LV_100ASK_GENERIC_UI_SMALLE_HAS_LOCK_SCREEN != 0
 
 /*********************
  *      DEFINES
@@ -35,7 +35,7 @@ void set_page_lock_screen_time(uint32_t period);
 
 void set_page_lock_screen_reset(void);
 
-#endif /* LV_100ASK_HAS_LOCK_SCREEN */
+#endif /* LV_100ASK_GENERIC_UI_SMALLE_HAS_LOCK_SCREEN */
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -94,10 +94,10 @@ lv_100ask_app_data_t lv_100ask_app_2048_t = {
         /*Create 2048 game*/
     lv_obj_t * obj_2048 = lv_100ask_2048_create(cont);
     lv_obj_set_style_text_font(obj_2048, &lv_font_montserrat_42, 0);
-#if LV_100ASK_SCREEN_SIZE_320X480
+#if LV_100ASK_GENERIC_UI_SMALLE_SCREEN_SIZE_320X480
     lv_obj_set_size(obj_2048, 280, 300);
     lv_obj_align(obj_2048, LV_ALIGN_CENTER, 0, -10);
-#elif LV_100ASK_SCREEN_SIZE_480X480
+#elif LV_100ASK_GENERIC_UI_SMALLE_SCREEN_SIZE_480X480
     lv_obj_set_size(obj_2048, 380, 380);
     lv_obj_align(obj_2048, LV_ALIGN_BOTTOM_MID, 0, -30);
 #endif
