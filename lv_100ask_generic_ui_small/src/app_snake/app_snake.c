@@ -41,9 +41,9 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_FILE_EXPLORER != 0)
 
 #include "app_snake.h"
-
 
 /*********************
  *      DEFINES
@@ -500,3 +500,15 @@ static void lv_100ask_game_snake_update_snake_data(void)
     lv_obj_set_pos(temp_list->obj, temp_list->x, temp_list->y);
 }
 
+
+#else
+
+lv_100ask_app_data_t lv_100ask_app_snake_t = {
+    .cont  = NULL,
+    .name  = NULL,
+    .desc  = NULL,
+    .open  = NULL,
+    .close = NULL
+};
+
+#endif

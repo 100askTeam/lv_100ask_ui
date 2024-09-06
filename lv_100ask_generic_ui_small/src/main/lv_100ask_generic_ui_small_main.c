@@ -268,6 +268,8 @@ void lv_100ask_generic_ui_small(void)
 
     uint16_t favorites_app_total = sizeof(favorites_app_list)/sizeof(lv_100ask_app_data_t*);
     for(i = 0; i < favorites_app_total; i++) {
+        if((favorites_app_list[i]->open == NULL) || !favorites_app_icon_list[i]) continue;
+
         image = lv_image_create(cont_recent_app_item);
         //lv_obj_set_size(image, 96, 96);
         lv_image_set_src(image, favorites_app_icon_list[i]);
@@ -280,7 +282,8 @@ void lv_100ask_generic_ui_small(void)
     lv_obj_send_event(cont_recent_app_item, LV_EVENT_SCROLL, NULL);
 
     /*Be sure the fist button is in the middle*/
-    lv_obj_scroll_to_view(lv_obj_get_child(cont_recent_app_item, 0), LV_ANIM_OFF);
+    if(lv_obj_get_child(cont_recent_app_item, 0))
+        lv_obj_scroll_to_view(lv_obj_get_child(cont_recent_app_item, 0), LV_ANIM_OFF);
 
     ////////////////////////////////////////////////// 1-3
     lv_obj_t * cont_recent_app_info = lv_obj_create(cont_primary_desktop);
@@ -329,6 +332,8 @@ void lv_100ask_generic_ui_small(void)
     uint16_t all_app = sizeof(all_app_list)/sizeof(lv_100ask_app_data_t*);
     all_app = all_app + (all_app % APP_A_ROW_OF_TOTAL) - 1;
     for(i = 0; i < all_app; i++) {
+        if((all_app_list[i]->open == NULL) || !all_app_icon_list[i]) continue;
+
         if(i >= all_app-1){
             image = lv_obj_create(cont_secondary_desktop);
             lv_obj_set_size(image, 96, 96);
@@ -349,7 +354,8 @@ void lv_100ask_generic_ui_small(void)
     lv_obj_send_event(cont_secondary_desktop, LV_EVENT_SCROLL, NULL);
 
     /*Be sure the fist button is in the middle*/
-    lv_obj_scroll_to_view(lv_obj_get_child(cont_secondary_desktop, 0), LV_ANIM_OFF);
+    if(lv_obj_get_child(cont_secondary_desktop, 0))
+        lv_obj_scroll_to_view(lv_obj_get_child(cont_secondary_desktop, 0), LV_ANIM_OFF);
 
     lv_obj_set_style_bg_opa(cont_primary_desktop, LV_OPA_TRANSP, 0);
     lv_obj_set_style_bg_opa(cont_secondary_desktop, LV_OPA_TRANSP, 0);

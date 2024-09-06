@@ -41,6 +41,8 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_HARDWARE_TEST != 0)
+
 #include <string.h>
 
 #include "app_hardware_test.h"
@@ -766,3 +768,17 @@ static void update_ec11_timer(lv_timer_t * timer)
     lv_timer_set_period(timer, 1000);
 #endif
 }
+
+
+
+#else
+
+lv_100ask_app_data_t lv_100ask_app_hardware_test_t = {
+    .cont  = NULL,
+    .name  = NULL,
+    .desc  = NULL,
+    .open  = NULL,
+    .close = NULL
+};
+
+#endif

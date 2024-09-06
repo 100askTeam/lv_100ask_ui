@@ -41,9 +41,9 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_FILE_EXPLORER != 0)
 
 #include "app_memory_game.h"
-
 
 /*********************
  *      DEFINES
@@ -130,3 +130,16 @@ static void slider_event_cb(lv_event_t * e)
     lv_100ask_memory_game_set_map(memory_game, lv_slider_get_value(slider), lv_slider_get_value(slider));
     lv_label_set_text_fmt(level_label, "%d*%d", lv_100ask_memory_game_get_row(memory_game), lv_100ask_memory_game_get_row(memory_game));
 }
+
+
+#else
+
+lv_100ask_app_data_t lv_100ask_app_memory_game_t = {
+    .cont  = NULL,
+    .name  = NULL,
+    .desc  = NULL,
+    .open  = NULL,
+    .close = NULL
+};
+
+#endif

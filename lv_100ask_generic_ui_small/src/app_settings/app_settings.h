@@ -11,6 +11,7 @@ extern "C" {
  *********************/
 #include "../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_SETTING != 0)
 
 /*********************
  *      DEFINES
@@ -27,8 +28,10 @@ extern "C" {
 /**********************
  *      MACROS
  **********************/
-extern lv_100ask_app_data_t lv_100ask_app_settings_t;
 
+#endif
+
+extern lv_100ask_app_data_t lv_100ask_app_settings_t;
 
 #ifdef __cplusplus
 } /* extern "C" */

@@ -41,6 +41,7 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_CALC != 0)
 
 #include "app_calc.h"
 
@@ -115,4 +116,15 @@ static int16_t app_calc_close(void)
     return 0;
 }
 
+#else
+
+lv_100ask_app_data_t lv_100ask_app_calc_t = {
+    .cont  = NULL,
+    .name  = NULL,
+    .desc  = NULL,
+    .open  = NULL,
+    .close = NULL
+};
+
+#endif
 

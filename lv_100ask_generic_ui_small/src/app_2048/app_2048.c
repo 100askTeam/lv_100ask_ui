@@ -41,6 +41,7 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_2048 != 0)
 
 #include "app_2048.h"
 
@@ -157,3 +158,14 @@ static void new_game_btn_event_handler(lv_event_t * e)
     lv_100ask_2048_set_new_game(obj_2048);
 }
 
+#else
+
+lv_100ask_app_data_t lv_100ask_app_2048_t = {
+    .cont  = NULL,
+    .name  = NULL,
+    .desc  = NULL,
+    .open  = NULL,
+    .close = NULL
+};
+
+#endif

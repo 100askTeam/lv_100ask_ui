@@ -41,9 +41,9 @@
  *********************/
 #include "../../lv_100ask_generic_ui_small.h"
 
+#if (LV_100ASK_GENERIC_UI_SMALLE_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_SMALLE_USE_APP_TEMPLATE != 0)
 
 #include "app_template.h"
-
 
 /*********************
  *      DEFINES
@@ -103,4 +103,16 @@ static int16_t app_template_close(void)
     return 0;
 }
 
+
+#else
+
+lv_100ask_app_data_t lv_100ask_app_template_t = {
+    .cont  = NULL,
+    .name  = NULL,
+    .desc  = NULL,
+    .open  = NULL,
+    .close = NULL
+};
+
+#endif
 
