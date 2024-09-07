@@ -6,8 +6,7 @@
 
 |  路径   | 说明  |
 |  ----  | ----  |
-| [lv_100ask_generic_ui_small](lv_100ask_generic_ui_small/README_zh.md) | 适用于小尺寸屏幕的参考案例 |
-| [lv_100ask_generic_ui_large](lv_100ask_generic_ui_large/README_zh.md) | 适用于中、大尺寸屏幕的参考案例 |
+| [lv_100ask_generic_ui](lv_100ask_generic_ui/README_zh.md) | 通用参考案例 |
 | more todo...  | more todo... |
 
 

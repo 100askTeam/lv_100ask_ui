@@ -6,8 +6,7 @@ This is a reference case based on the LVGL library.
 
 |  path   | describe  |
 |  ----  | ----  |
-| [lv_100ask_generic_ui_small](lv_100ask_generic_ui_small/README_zh.md) | Reference case for small-sized screens |
-| [lv_100ask_generic_ui_large](lv_100ask_generic_ui_large/README_zh.md) | Reference cases applicable to medium and large-sized screens |
+| [lv_100ask_generic_ui](lv_100ask_generic_ui/README_zh.md) | General reference cases |
 | more todo...  | more todo... |
 
 
