@@ -125,8 +125,14 @@ lv_obj_t * page_drop_down_init(void)
     //lv_obj_set_scroll_snap_y(cont, LV_SCROLL_SNAP_START);
     lv_obj_set_scroll_dir(cont, LV_DIR_VER);
     lv_obj_set_scrollbar_mode(cont, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_y(cont, -480);
 
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
+lv_obj_set_y(cont, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
+lv_obj_set_y(cont, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+lv_obj_set_y(cont, -600);
+#endif
    
 
     //////////////////////////////////////////////////////////

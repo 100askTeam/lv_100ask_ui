@@ -489,7 +489,13 @@ static void drop_down_apge_event_handler(lv_event_t * e)
 {
     lv_obj_t * obj = lv_event_get_target(e);
 
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
     lv_obj_set_y(obj, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
+    lv_obj_set_y(obj, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+    lv_obj_set_y(obj, -600);
+#endif
     g_lv_100ask_desktop_data.system_state = LV_SYSTEM_STATE_SHOW_DESKTOP;
 }
 
@@ -509,7 +515,14 @@ static void top_drag_event_handler(lv_event_t * e)
 
         int32_t y = lv_obj_get_y_aligned(obj) + vect.y;
         lv_obj_set_y(obj, y);
-        lv_obj_set_y(obj_page_dorp_down, y-480);
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
+    lv_obj_set_y(obj_page_dorp_down, y-480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
+    lv_obj_set_y(obj_page_dorp_down, y-480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+    lv_obj_set_y(obj_page_dorp_down, y-600);
+#endif
+        
     }
     else if(code == LV_EVENT_RELEASED)
     {
@@ -525,7 +538,14 @@ static void top_drag_event_handler(lv_event_t * e)
         lv_obj_set_y(obj, 0);
 
         if(g_lv_100ask_desktop_data.system_state == LV_SYSTEM_STATE_SHOW_DESKTOP)
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
             lv_obj_set_y(obj_page_dorp_down, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
+            lv_obj_set_y(obj_page_dorp_down, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+            lv_obj_set_y(obj_page_dorp_down, -600);
+#endif
+            
     }
 }
 
