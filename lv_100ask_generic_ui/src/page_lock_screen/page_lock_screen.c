@@ -93,27 +93,27 @@ static lv_style_t style_btn_check;
 /**********************
  *      MACROS
  **********************/
-LV_IMG_DECLARE(img_lock_screen_1);
-LV_IMG_DECLARE(img_lock_screen_2);
-LV_IMG_DECLARE(img_lock_screen_3);
-LV_IMG_DECLARE(img_lock_screen_4);
-LV_IMG_DECLARE(img_lock_screen_5);
-LV_IMG_DECLARE(img_lock_screen_6);
+LV_IMG_DECLARE(img_lock_screen_480x480_1);
+LV_IMG_DECLARE(img_lock_screen_480x480_2);
+LV_IMG_DECLARE(img_lock_screen_480x480_3);
+LV_IMG_DECLARE(img_lock_screen_480x480_4);
+LV_IMG_DECLARE(img_lock_screen_480x480_5);
+LV_IMG_DECLARE(img_lock_screen_480x480_6);
 
 #if LV_100ASK_GENERIC_UI_LIMIT_LOCK_SCREEN_PIC
 static const lv_image_dsc_t *g_img_lock_screen[MAX_LOCK_SCREEN_IMG] = {
-    &img_lock_screen_1,
-    &img_lock_screen_4,
-    &img_lock_screen_6
+    &img_lock_screen_480x480_1,
+    &img_lock_screen_480x480_4,
+    &img_lock_screen_480x480_6
 };
 #else
 static const lv_image_dsc_t *g_img_lock_screen[MAX_LOCK_SCREEN_IMG] = {
-    &img_lock_screen_1,
-    &img_lock_screen_2,
-    &img_lock_screen_3,
-    &img_lock_screen_4,
-    &img_lock_screen_5,
-    &img_lock_screen_6
+    &img_lock_screen_480x480_1,
+    &img_lock_screen_480x480_2,
+    &img_lock_screen_480x480_3,
+    &img_lock_screen_480x480_4,
+    &img_lock_screen_480x480_5,
+    &img_lock_screen_480x480_6
 };
 #endif
 

@@ -41,7 +41,7 @@
  *********************/
 #include "../../lv_100ask_generic_ui.h"
 
-#if (LV_100ASK_GENERIC_UI_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_USE_APP_FILE_EXPLORER != 0)
+#if (LV_100ASK_GENERIC_UI_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_USE_APP_MEMORY_GAME != 0)
 
 #include "app_memory_game.h"
 
