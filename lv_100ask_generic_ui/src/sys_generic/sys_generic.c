@@ -144,7 +144,10 @@ static void click_check_timer(lv_timer_t * timer)
 
     if(indev_state == LV_INDEV_STATE_PRESSED)
     {
+#if LV_100ASK_GENERIC_UI_HAS_LOCK_SCREEN
         set_page_lock_screen_reset();
+#endif
+
 #if LV_100ASK_GENERIC_UI_DshanMCUH7R_NoRTOS
         if(g_lv_100ask_sys_generic_data.sound && (buzzer_state == 0))
         {

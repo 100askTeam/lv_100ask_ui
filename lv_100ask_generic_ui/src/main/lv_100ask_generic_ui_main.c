@@ -179,7 +179,10 @@ void lv_100ask_generic_ui(void)
     lv_obj_remove_style_all(g_lv_100ask_desktop_data.cont_desktop);
     lv_obj_set_size(g_lv_100ask_desktop_data.cont_desktop, LV_PCT(100), LV_PCT(100));
     lv_obj_center(g_lv_100ask_desktop_data.cont_desktop);
-#if LV_100ASK_GENERIC_UI_HAS_DESKTOP_BG && LV_100ASK_GENERIC_UIE_LIMIT_DESKTOP_BG_PIC
+
+    //////////////////////////////////////////////////
+#if LV_100ASK_GENERIC_UI_HAS_DESKTOP_BG
+#if LV_100ASK_GENERIC_UIE_LIMIT_DESKTOP_BG_PIC
     static lv_color_t grad_colors[2];
 
     grad_colors[0] = lv_color_make(lv_rand(0, 255), lv_rand(0, 255), lv_rand(0, 255));
@@ -205,13 +208,7 @@ void lv_100ask_generic_ui(void)
     /*Set gradient as background*/
     lv_style_set_bg_grad(&style_grad_bg, &grad_bg);
 
-    //lv_obj_add_style(g_lv_100ask_desktop_data.cont_desktop, &style_grad_bg, 0);
-#endif
-
-    //////////////////////////////////////////////////
-#if LV_100ASK_GENERIC_UI_HAS_DESKTOP_BG
-
-#if LV_100ASK_GENERIC_UIE_LIMIT_DESKTOP_BG_PIC
+    // img_bg
     lv_obj_t * img_bg = lv_obj_create(g_lv_100ask_desktop_data.cont_desktop);
     lv_obj_remove_style_all(img_bg);
     lv_obj_set_size(img_bg, lv_pct(100), lv_pct(100));
@@ -300,7 +297,14 @@ void lv_100ask_generic_ui(void)
     ////////////////////////////////////////////////// 1-3
     lv_obj_t * cont_recent_app_info = lv_obj_create(cont_primary_desktop);
     //lv_obj_remove_style_all(cont_recent_app_info);
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
+    lv_obj_set_size(cont_recent_app_info, 800, 800);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
     lv_obj_set_size(cont_recent_app_info, 1200, 1200);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+    lv_obj_set_size(cont_recent_app_info, 2000, 2000);
+#endif
+    
     lv_obj_set_style_pad_all(cont_recent_app_info, 0, 0);
     lv_obj_set_style_opa(cont_recent_app_info, LV_OPA_90, 0);
     lv_obj_align_to(cont_recent_app_info, cont_recent_app_item, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
@@ -344,8 +348,6 @@ void lv_100ask_generic_ui(void)
     uint16_t all_app_valid = sizeof(all_app_list)/sizeof(lv_100ask_app_data_t*);
     uint16_t all_app_invalid = APP_A_ROW_OF_TOTAL - (all_app_valid % APP_A_ROW_OF_TOTAL);
     for(i = 0; i < (all_app_valid + all_app_invalid); i++) {
-        if((all_app_list[i]->open == NULL) || !all_app_icon_list[i]) continue;
-
         if(i >= all_app_valid){
             image = lv_obj_create(cont_secondary_desktop);
             lv_obj_set_size(image, 96, 96);
@@ -354,6 +356,8 @@ void lv_100ask_generic_ui(void)
         }
         else
         {
+            if((all_app_list[i]->open == NULL) || !all_app_icon_list[i]) continue;
+
             image = lv_image_create(cont_secondary_desktop);
             lv_image_set_src(image, all_app_icon_list[i]);
             lv_obj_set_user_data(image, all_app_list[i]);
@@ -590,8 +594,11 @@ static void buttom_drag_event_handler(lv_event_t * e)
                     int32_t index;
                     lv_obj_t * title;
                     lv_obj_t * tv;
-
+#if LV_100ASK_GENERIC_UI_HAS_DESKTOP_BG
                     tv = lv_obj_get_child(cont_desktop, 1);
+#else
+                    tv = lv_obj_get_child(cont_desktop, 0);
+#endif
                     title = lv_tileview_get_tile_active(tv);
                     index = lv_obj_get_index(title);
 
@@ -609,7 +616,13 @@ static void buttom_drag_event_handler(lv_event_t * e)
             }
             else if(g_lv_100ask_desktop_data.system_state == LV_SYSTEM_STATE_SHOW_DROP_DOWN_PAGE)
             {
-                lv_obj_set_y(obj_page_dorp_down, -480);
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
+            lv_obj_set_y(obj_page_dorp_down, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
+            lv_obj_set_y(obj_page_dorp_down, -480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+            lv_obj_set_y(obj_page_dorp_down, -600);
+#endif
                 g_lv_100ask_desktop_data.system_state = LV_SYSTEM_STATE_SHOW_DESKTOP;
             }
 
@@ -620,7 +633,13 @@ static void buttom_drag_event_handler(lv_event_t * e)
         lv_obj_set_y(obj, 0);
 
         if(g_lv_100ask_desktop_data.system_state == LV_SYSTEM_STATE_SHOW_DROP_DOWN_PAGE)
+#if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
             lv_obj_set_y(obj_page_dorp_down, 480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
+            lv_obj_set_y(obj_page_dorp_down, 480);
+#elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
+            lv_obj_set_y(obj_page_dorp_down, 600);
+#endif
     }
 }
 
