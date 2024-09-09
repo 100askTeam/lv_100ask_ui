@@ -96,6 +96,8 @@ typedef enum {
 typedef struct {
     lv_obj_t * cont_desktop;
     lv_obj_t * cont_drop_down_page;
+    lv_obj_t * label_app_name;
+    lv_obj_t * label_app_desc;
     lv_100ask_system_state_t system_state;
     lv_100ask_app_data_t * cur_app;
 }lv_100ask_desktop_data_t;
@@ -104,7 +106,8 @@ typedef struct {
 /**********************
  *  STATIC PROTOTYPES
  **********************/
-static void scroll_recent_app_item_event_cb(lv_event_t * e);
+static void scroll_favorites_app_item_event_cb(lv_event_t * e);
+static void scroll_end_favorites_app_item_event_cb(lv_event_t * e);
 static void scroll_all_app_event_cb(lv_event_t * e);
 static void drop_down_apge_event_handler(lv_event_t * e);
 static void top_drag_event_handler(lv_event_t * e);
@@ -259,18 +262,19 @@ void lv_100ask_generic_ui(void)
     lv_obj_align(label_battery, LV_ALIGN_RIGHT_MID, -10, 0);
 
     ////////////////////////////////////////////////// 1-2
-    lv_obj_t * cont_recent_app_item = lv_obj_create(cont_primary_desktop);
-    lv_obj_remove_style_all(cont_recent_app_item);
-    lv_obj_set_size(cont_recent_app_item, lv_pct(100), lv_pct(56));
-    lv_obj_align_to(cont_recent_app_item, cont_status_bar, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
-    lv_obj_set_flex_flow(cont_recent_app_item, LV_FLEX_FLOW_ROW);
-    lv_obj_add_event_cb(cont_recent_app_item, scroll_recent_app_item_event_cb, LV_EVENT_SCROLL, NULL);
-    //lv_obj_set_style_clip_corner(cont_recent_app_item, true, 0);
-    lv_obj_set_scroll_dir(cont_recent_app_item, LV_DIR_HOR);
-    lv_obj_set_scroll_snap_x(cont_recent_app_item, LV_SCROLL_SNAP_CENTER);
-    lv_obj_set_scrollbar_mode(cont_recent_app_item, LV_SCROLLBAR_MODE_OFF);
-    lv_obj_set_style_pad_column(cont_recent_app_item, 46, 0);
-    lv_obj_set_style_pad_ver(cont_recent_app_item, 30, 0);
+    lv_obj_t * cont_favorites_app_item = lv_obj_create(cont_primary_desktop);
+    lv_obj_remove_style_all(cont_favorites_app_item);
+    lv_obj_set_size(cont_favorites_app_item, lv_pct(100), lv_pct(56));
+    lv_obj_align_to(cont_favorites_app_item, cont_status_bar, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
+    lv_obj_set_flex_flow(cont_favorites_app_item, LV_FLEX_FLOW_ROW);
+    lv_obj_add_event_cb(cont_favorites_app_item, scroll_favorites_app_item_event_cb, LV_EVENT_SCROLL, NULL);
+    lv_obj_add_event_cb(cont_favorites_app_item, scroll_end_favorites_app_item_event_cb, LV_EVENT_SCROLL_END, NULL);
+    //lv_obj_set_style_clip_corner(cont_favorites_app_item, true, 0);
+    lv_obj_set_scroll_dir(cont_favorites_app_item, LV_DIR_HOR);
+    lv_obj_set_scroll_snap_x(cont_favorites_app_item, LV_SCROLL_SNAP_CENTER);
+    lv_obj_set_scrollbar_mode(cont_favorites_app_item, LV_SCROLLBAR_MODE_OFF);
+    lv_obj_set_style_pad_column(cont_favorites_app_item, 46, 0);
+    lv_obj_set_style_pad_ver(cont_favorites_app_item, 30, 0);
 
     uint32_t i;
     lv_obj_t * image;
@@ -279,7 +283,7 @@ void lv_100ask_generic_ui(void)
     for(i = 0; i < favorites_app_total; i++) {
         if((favorites_app_list[i]->open == NULL) || !favorites_app_icon_list[i]) continue;
 
-        image = lv_image_create(cont_recent_app_item);
+        image = lv_image_create(cont_favorites_app_item);
         //lv_obj_set_size(image, 96, 96);
         lv_image_set_src(image, favorites_app_icon_list[i]);
         lv_obj_set_user_data(image, favorites_app_list[i]);
@@ -287,53 +291,54 @@ void lv_100ask_generic_ui(void)
         lv_obj_add_event_cb(image, app_icon_event_cb, LV_EVENT_CLICKED, g_lv_100ask_desktop_data.cont_desktop);
     }
 
-    /*Update the buttons position manually for first*/
-    lv_obj_send_event(cont_recent_app_item, LV_EVENT_SCROLL, NULL);
-
-    /*Be sure the fist button is in the middle*/
-    if(lv_obj_get_child(cont_recent_app_item, 0))
-        lv_obj_scroll_to_view(lv_obj_get_child(cont_recent_app_item, 0), LV_ANIM_OFF);
-
     ////////////////////////////////////////////////// 1-3
-    lv_obj_t * cont_recent_app_info = lv_obj_create(cont_primary_desktop);
-    //lv_obj_remove_style_all(cont_recent_app_info);
+    lv_obj_t * cont_favorites_app_info = lv_obj_create(cont_primary_desktop);
+    //lv_obj_remove_style_all(cont_favorites_app_info);
 #if LV_100ASK_GENERIC_UI_SCREEN_SIZE_320X480
-    lv_obj_set_size(cont_recent_app_info, 800, 800);
+    lv_obj_set_size(cont_favorites_app_info, 800, 800);
 #elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_480X480
-    lv_obj_set_size(cont_recent_app_info, 1200, 1200);
+    lv_obj_set_size(cont_favorites_app_info, 1200, 1200);
 #elif LV_100ASK_GENERIC_UI_SCREEN_SIZE_1024X600
-    lv_obj_set_size(cont_recent_app_info, 2000, 2000);
+    lv_obj_set_size(cont_favorites_app_info, 2000, 2000);
 #endif
     
-    lv_obj_set_style_pad_all(cont_recent_app_info, 0, 0);
-    lv_obj_set_style_opa(cont_recent_app_info, LV_OPA_90, 0);
-    lv_obj_align_to(cont_recent_app_info, cont_recent_app_item, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
-    lv_obj_set_style_radius(cont_recent_app_info, LV_RADIUS_CIRCLE, 0);
-    //lv_obj_set_style_bg_color(cont_recent_app_info, lv_color_hex(0xffffff), 0);
-    lv_obj_set_style_bg_opa(cont_recent_app_info, LV_OPA_COVER, 0);
+    lv_obj_set_style_pad_all(cont_favorites_app_info, 0, 0);
+    lv_obj_set_style_opa(cont_favorites_app_info, LV_OPA_90, 0);
+    lv_obj_align_to(cont_favorites_app_info, cont_favorites_app_item, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
+    lv_obj_set_style_radius(cont_favorites_app_info, LV_RADIUS_CIRCLE, 0);
+    //lv_obj_set_style_bg_color(cont_favorites_app_info, lv_color_hex(0xffffff), 0);
+    lv_obj_set_style_bg_opa(cont_favorites_app_info, LV_OPA_COVER, 0);
 
-    lv_obj_t * label_app_title = lv_label_create(cont_recent_app_info);
-    lv_obj_set_style_text_font(label_app_title, &lv_font_montserrat_24, 0);
-    lv_label_set_text(label_app_title, "100ASK APP");
-    lv_obj_align(label_app_title, LV_ALIGN_TOP_MID, 0, 30);
+    g_lv_100ask_desktop_data.label_app_name = lv_label_create(cont_favorites_app_info);
+    lv_obj_set_style_text_font(g_lv_100ask_desktop_data.label_app_name, &lv_font_montserrat_24, 0);
+    lv_label_set_text(g_lv_100ask_desktop_data.label_app_name, "100ASK APP");
+    lv_obj_align(g_lv_100ask_desktop_data.label_app_name, LV_ALIGN_TOP_MID, 0, 30);
 
-    lv_obj_t * label_app_info = lv_label_create(cont_recent_app_info);
-    lv_obj_set_style_text_font(label_app_info, &lv_font_montserrat_18, 0);
-    lv_obj_set_style_text_align(label_app_info, LV_TEXT_ALIGN_CENTER, 0);
-    lv_label_set_text(label_app_info, "This is a testing application\nwww.100ask.net");
-    lv_obj_align_to(label_app_info, label_app_title, LV_ALIGN_OUT_BOTTOM_MID, 0, 20);
+    g_lv_100ask_desktop_data.label_app_desc = lv_label_create(cont_favorites_app_info);
+    lv_obj_set_style_text_font(g_lv_100ask_desktop_data.label_app_desc, &lv_font_montserrat_18, 0);
+    lv_obj_set_style_text_align(g_lv_100ask_desktop_data.label_app_desc, LV_TEXT_ALIGN_CENTER, 0);
+    lv_label_set_text(g_lv_100ask_desktop_data.label_app_desc, "This is a testing application\nwww.100ask.net");
+    lv_obj_align_to(g_lv_100ask_desktop_data.label_app_desc, g_lv_100ask_desktop_data.label_app_name, LV_ALIGN_OUT_BOTTOM_MID, 0, 20);
 
-    lv_obj_t * label_all_app = lv_label_create(cont_recent_app_info);
+    lv_obj_t * label_all_app = lv_label_create(cont_favorites_app_info);
     lv_obj_set_style_text_font(label_all_app, &lv_font_montserrat_16, 0);
     lv_label_set_text(label_all_app, LV_SYMBOL_UP);
-    lv_obj_align_to(label_all_app, label_app_info, LV_ALIGN_OUT_BOTTOM_MID, 0, 26);
+    lv_obj_align_to(label_all_app, g_lv_100ask_desktop_data.label_app_desc, LV_ALIGN_OUT_BOTTOM_MID, 0, 26);
+
+
+    /*Update the buttons position manually for first*/
+    lv_obj_send_event(cont_favorites_app_item, LV_EVENT_SCROLL, NULL);
+
+    /*Be sure the fist button is in the middle*/
+    if(lv_obj_get_child(cont_favorites_app_item, 0))
+        lv_obj_scroll_to_view(lv_obj_get_child(cont_favorites_app_item, 0), LV_ANIM_OFF);
 
     ////////////////////////////////////////////////// 2-1
     lv_obj_t * cont_secondary_desktop = lv_tileview_add_tile(tv_desktop, 0, 1, LV_DIR_NONE);
     //lv_obj_add_flag(cont_secondary_desktop, LV_OBJ_FLAG_GESTURE_BUBBLE);
     lv_obj_set_flex_flow(cont_secondary_desktop, LV_FLEX_FLOW_ROW_WRAP);
     lv_obj_set_flex_align(cont_secondary_desktop, LV_FLEX_ALIGN_SPACE_AROUND, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
-    lv_obj_add_event_cb(cont_secondary_desktop, scroll_all_app_event_cb, LV_EVENT_SCROLL, NULL);
+    //lv_obj_add_event_cb(cont_secondary_desktop, scroll_all_app_event_cb, LV_EVENT_SCROLL, NULL);
     //lv_obj_set_style_clip_corner(cont_secondary_desktop, true, 0);
     lv_obj_set_scroll_dir(cont_secondary_desktop, LV_DIR_VER);
     lv_obj_set_scroll_snap_y(cont_secondary_desktop, LV_SCROLL_SNAP_CENTER);
@@ -644,8 +649,7 @@ static void buttom_drag_event_handler(lv_event_t * e)
 }
 
 
-
-static void scroll_recent_app_item_event_cb(lv_event_t * e)
+static void scroll_favorites_app_item_event_cb(lv_event_t * e)
 {
     lv_obj_t * cont = lv_event_get_target(e);
 
@@ -688,6 +692,38 @@ static void scroll_recent_app_item_event_cb(lv_event_t * e)
         lv_opa_t opa = lv_map(y, 0, r, LV_OPA_TRANSP, LV_OPA_COVER);
         lv_obj_set_style_opa(child, LV_OPA_COVER - opa, 0);
         //lv_obj_set_style_transform_scale(child, LV_OPA_COVER - opa, 0);
+    }
+}
+
+
+static void scroll_end_favorites_app_item_event_cb(lv_event_t * e)
+{
+    lv_100ask_app_data_t * app_data;
+
+    lv_obj_t * cont = lv_event_get_target(e);
+    
+    uint32_t i;
+    lv_opa_t opa = 0;
+    lv_opa_t last_max_opa = 0;
+    lv_obj_t * child;
+    lv_obj_t * target_child = NULL;
+    uint32_t child_cnt = lv_obj_get_child_count(cont);
+    for(i = 0; i < child_cnt; i++) {
+        child = lv_obj_get_child(cont, i);
+        opa = lv_obj_get_style_opa(child, 0);
+
+        if(opa > last_max_opa)
+        {
+            last_max_opa = opa;
+            target_child = child;
+        }
+    }
+    if(target_child)
+    {
+        app_data = lv_obj_get_user_data(target_child);
+        lv_label_set_text(g_lv_100ask_desktop_data.label_app_name, app_data->name);
+        lv_label_set_text(g_lv_100ask_desktop_data.label_app_desc, app_data->desc);
+        lv_obj_align_to(g_lv_100ask_desktop_data.label_app_desc, g_lv_100ask_desktop_data.label_app_name, LV_ALIGN_OUT_BOTTOM_MID, 0, 20);
     }
 }
 

@@ -65,8 +65,8 @@ static int16_t app_file_explorer_close(void);
  **********************/
 lv_100ask_app_data_t lv_100ask_app_file_explorer_t = {
     .cont  = NULL,
-    .name  = "Hw Test",
-    .desc  = "Hardware Test",
+    .name  = "File",
+    .desc  = "File Explorer",
     .open  = app_file_explorer_open,
     .close = app_file_explorer_close
 };

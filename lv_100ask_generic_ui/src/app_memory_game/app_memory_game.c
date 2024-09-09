@@ -66,8 +66,8 @@ static void slider_event_cb(lv_event_t * e);
  **********************/
 lv_100ask_app_data_t lv_100ask_app_memory_game_t = {
     .cont  = NULL,
-    .name  = "Hw Test",
-    .desc  = "Hardware Test",
+    .name  = "Memory",
+    .desc  = "Memory gatch game",
     .open  = app_memory_game_open,
     .close = app_memory_game_close
 };

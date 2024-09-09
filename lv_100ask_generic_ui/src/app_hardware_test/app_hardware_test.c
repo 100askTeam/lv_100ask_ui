@@ -110,7 +110,7 @@ static void update_ec11_timer(lv_timer_t * timer);
 lv_100ask_app_data_t lv_100ask_app_hardware_test_t = {
     .cont  = NULL,
     .name  = "Hw Test",
-    .desc  = "Hardware Test",
+    .desc  = "Onboard hardware testing",
     .open  = app_hardware_test_open,
     .close = app_hardware_test_close
 };

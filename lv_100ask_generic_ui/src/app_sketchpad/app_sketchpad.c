@@ -64,8 +64,8 @@ static int16_t app_sketchpad_close(void);
  **********************/
 lv_100ask_app_data_t lv_100ask_app_sketchpad_t = {
     .cont  = NULL,
-    .name  = "Hw Test",
-    .desc  = "Hardware Test",
+    .name  = "Sketchpad",
+    .desc  = "Draw, Create, Share!",
     .open  = app_sketchpad_open,
     .close = app_sketchpad_close
 };

@@ -68,8 +68,8 @@ static void new_game_btn_event_handler(lv_event_t * e);
  **********************/
 lv_100ask_app_data_t lv_100ask_app_2048_t = {
     .cont  = NULL,
-    .name  = "Hw Test",
-    .desc  = "Hardware Test",
+    .name  = "2048",
+    .desc  = "Join the tiles, get to 2048!",
     .open  = app_2048_open,
     .close = app_2048_close
 };

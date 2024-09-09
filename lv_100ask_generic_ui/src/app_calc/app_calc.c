@@ -65,8 +65,8 @@ static int16_t app_calc_close(void);
  **********************/
 lv_100ask_app_data_t lv_100ask_app_calc_t = {
     .cont  = NULL,
-    .name  = "Hw Test",
-    .desc  = "Hardware Test",
+    .name  = "Calc",
+    .desc  = "Calculator",
     .open  = app_calc_open,
     .close = app_calc_close
 };

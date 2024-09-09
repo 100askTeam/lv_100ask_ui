@@ -94,7 +94,7 @@ static void sw_sysmon_performance_event_handler(lv_event_t * e);
 lv_100ask_app_data_t lv_100ask_app_settings_t = {
     .cont  = NULL,
     .name  = "Settings",
-    .desc  = "System Settings",
+    .desc  = "System Settings, About us",
     .open  = app_settings_open,
     .close = app_settings_close
 };
