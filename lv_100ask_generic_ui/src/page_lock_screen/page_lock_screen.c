@@ -70,6 +70,9 @@ typedef struct {
     lv_timer_t * timer_page_show;
     lv_timer_t * timer_update_humiture;
     lv_timer_t * timer_reset;
+#if LV_100ASK_GENERIC_UI_DshanMCUH7R_NoRTOS
+    uint16_t lcd_last_bl;
+#endif
 }lv_100ask_page_lock_screen_data_t;
 
 /**********************
@@ -239,6 +242,10 @@ static void page_hidden_event_handler(lv_event_t * e)
 
 static void page_hidden_timer(lv_timer_t * timer)
 {
+#if LV_100ASK_GENERIC_UI_DshanMCUH7R_NoRTOS
+    lcd_backlight_set_value(g_page_lock_screen_data.lcd_last_bl);
+#endif
+
     /*Use the user_data*/
     lv_obj_t * cont = lv_timer_get_user_data(timer);
     lv_obj_add_flag(cont, LV_OBJ_FLAG_HIDDEN);
@@ -247,6 +254,11 @@ static void page_hidden_timer(lv_timer_t * timer)
 
 static void page_show_timer(lv_timer_t * timer)
 {
+#if LV_100ASK_GENERIC_UI_DshanMCUH7R_NoRTOS
+    g_page_lock_screen_data.lcd_last_bl = lcd_backlight_get_value();
+    lcd_backlight_set_value(LV_100ASK_GENERIC_UI_LCD_LOCK_SCREEN_BACKLIGHT);
+#endif
+
     /*Use the user_data*/
     lv_obj_t * cont = lv_timer_get_user_data(timer);
     lv_obj_t * img = lv_obj_get_user_data(cont);
