@@ -41,7 +41,7 @@
  *********************/
 #include "../../lv_100ask_generic_ui.h"
 
-#if (LV_100ASK_GENERIC_UI_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_USE_APP_FILE_EXPLORER != 0)
+#if (LV_100ASK_GENERIC_UI_NO_BUILTIN_APP != 0) && (LV_100ASK_GENERIC_UI_USE_APP_FILE_EXPLORER != 0) && (LV_USE_FILE_EXPLORER != 0) 
 
 #include "app_file_explorer.h"
 
@@ -91,6 +91,7 @@ static int16_t app_file_explorer_open(void)
     lv_obj_set_size(cont, lv_pct(100), lv_pct(100));
 
     lv_obj_t * file_explorer = lv_file_explorer_create(cont);
+    lv_file_explorer_open_dir(file_explorer, LV_100ASK_GENERIC_UI_USE_APP_FILE_EXPLORER_DIR);
     lv_file_explorer_set_sort(file_explorer, LV_EXPLORER_SORT_KIND);
 
     lv_100ask_app_file_explorer_t.cont = cont;
