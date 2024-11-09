@@ -598,6 +598,7 @@ static void btn_list_set_screen_rotation_event_handler(lv_event_t * e)
     img = lv_image_create(btn);
     lv_image_set_src(img, LV_SYMBOL_OK);
 
+#if LV_100ASK_GENERIC_UI_HAS_SCREEN_ROTATION
     switch (btn_index)
     {
     case 0:
@@ -616,6 +617,7 @@ static void btn_list_set_screen_rotation_event_handler(lv_event_t * e)
     	lv_display_set_rotation(NULL, LV_DISPLAY_ROTATION_0);
     	break;
     }
+#endif
 
     last_btn_index = btn_index;
 
