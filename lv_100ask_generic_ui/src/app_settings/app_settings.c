@@ -84,6 +84,7 @@ static void sw_switch_theme_event_handler(lv_event_t * e);
 static void sw_sound_event_handler(lv_event_t * e);
 static void slider_set_brightness_event_handler(lv_event_t * e);
 static void btn_list_set_auto_lock_event_handler(lv_event_t * e);
+static void btn_list_set_screen_rotation_event_handler(lv_event_t * e);
 
 static void sw_sysmon_memory_event_handler(lv_event_t * e);
 static void sw_sysmon_performance_event_handler(lv_event_t * e);
@@ -163,6 +164,7 @@ static int16_t app_settings_open(void)
     cont_sub = create_switch(section, LV_SYMBOL_AUDIO, "Sound", true);
     lv_obj_add_event_cb(lv_obj_get_child(cont_sub, -1), sw_sound_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
 
+    // sub_auto_lock_page
     lv_obj_t * sub_auto_lock_page = lv_menu_page_create(menu, NULL);
     lv_obj_set_style_pad_hor(sub_auto_lock_page, lv_obj_get_style_pad_left(lv_menu_get_main_header(menu), 0), 0);
     section = lv_menu_section_create(sub_auto_lock_page);
@@ -191,6 +193,28 @@ static int16_t app_settings_open(void)
     lv_obj_add_event_cb(btn, btn_list_set_auto_lock_event_handler, LV_EVENT_CLICKED, list);
     btn = lv_list_add_button(list, NULL, "Never");
     lv_obj_add_event_cb(btn, btn_list_set_auto_lock_event_handler, LV_EVENT_CLICKED, list);
+
+    // sub_set_screen_rotation_page
+	lv_obj_t * sub_set_screen_rotation_page = lv_menu_page_create(menu, NULL);
+	lv_obj_set_style_pad_hor(sub_set_screen_rotation_page, lv_obj_get_style_pad_left(lv_menu_get_main_header(menu), 0), 0);
+	section = lv_menu_section_create(sub_set_screen_rotation_page);
+	cont_tmp = lv_menu_cont_create(section);
+	list = lv_list_create(cont_tmp);
+	lv_obj_set_height(list, LV_SIZE_CONTENT);
+	lv_obj_set_style_pad_all(list, 0, 0);
+	lv_obj_set_flex_grow(list, 1);
+	lv_obj_set_style_bg_opa(list, LV_OPA_TRANSP, 0);
+	lv_obj_set_style_border_width(list, 0, 0);
+	//lv_obj_set_style_base_dir(list, LV_BASE_DIR_RTL, 0);
+
+	btn = lv_list_add_button(list, NULL, "rotation 0");
+	lv_obj_add_event_cb(btn, btn_list_set_screen_rotation_event_handler, LV_EVENT_CLICKED, list);
+	btn = lv_list_add_button(list, NULL, "rotation 90");
+	lv_obj_add_event_cb(btn, btn_list_set_screen_rotation_event_handler, LV_EVENT_CLICKED, list);
+	btn = lv_list_add_button(list, NULL, "rotation 180");
+	lv_obj_add_event_cb(btn, btn_list_set_screen_rotation_event_handler, LV_EVENT_CLICKED, list);
+	btn = lv_list_add_button(list, NULL, "rotation 270");
+	lv_obj_add_event_cb(btn, btn_list_set_screen_rotation_event_handler, LV_EVENT_CLICKED, list);
 
     ////////////////////////////// About
     lv_obj_t * sub_software_info_page = lv_menu_page_create(menu, NULL);
@@ -276,6 +300,9 @@ static int16_t app_settings_open(void)
 
     cont_sub = create_text(section, LV_SYMBOL_RIGHT, "Auto-Lock", LV_MENU_ITEM_BUILDER_VARIANT_3);
     lv_menu_set_load_page_event(menu, cont_sub, sub_auto_lock_page);
+
+    cont_sub = create_text(section, LV_SYMBOL_RIGHT, "Screen Rotation", LV_MENU_ITEM_BUILDER_VARIANT_3);
+    lv_menu_set_load_page_event(menu, cont_sub, sub_set_screen_rotation_page);
 
     cont_sub = create_switch(section, LV_SYMBOL_SETTINGS, "System performance monitor", true);
     lv_obj_add_event_cb(lv_obj_get_child(cont_sub, -1), sw_sysmon_performance_event_handler, LV_EVENT_VALUE_CHANGED, NULL);
@@ -541,6 +568,55 @@ static void btn_list_set_auto_lock_event_handler(lv_event_t * e)
         break;
     }
 #endif
+    last_btn_index = btn_index;
+
+}
+
+static void btn_list_set_screen_rotation_event_handler(lv_event_t * e)
+{
+    // 5 seconds, 30 seconds, 1 minute, 2 minute, 3 minute, 4 minute, 5 minute, Never
+    // 0 - 7
+    static int32_t last_btn_index = -1;
+    lv_obj_t * img;
+    int32_t btn_index = 0;
+
+    lv_obj_t * btn = lv_event_get_target(e);
+    lv_obj_t * list = lv_event_get_user_data(e);
+
+    btn_index = lv_obj_get_index(btn);
+
+    if(last_btn_index != -1)
+    {
+        img = lv_obj_get_child(list, last_btn_index);
+        if(lv_obj_get_child_count(img) == 2)
+        {
+            img = lv_obj_get_child(img, -1);
+            lv_obj_del(img);
+        }
+    }
+
+    img = lv_image_create(btn);
+    lv_image_set_src(img, LV_SYMBOL_OK);
+
+    switch (btn_index)
+    {
+    case 0:
+    	lv_display_set_rotation(NULL, LV_DISPLAY_ROTATION_0);
+        break;
+    case 1:
+    	lv_display_set_rotation(NULL, LV_DISPLAY_ROTATION_90);
+    	break;
+    case 2:
+    	lv_display_set_rotation(NULL, LV_DISPLAY_ROTATION_180);
+    	break;
+    case 3:
+    	lv_display_set_rotation(NULL, LV_DISPLAY_ROTATION_270);
+    	break;
+    default:
+    	lv_display_set_rotation(NULL, LV_DISPLAY_ROTATION_0);
+    	break;
+    }
+
     last_btn_index = btn_index;
 
 }
