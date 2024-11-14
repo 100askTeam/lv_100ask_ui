@@ -116,7 +116,7 @@ void lv_100ask_boot_animation(uint32_t delay)
 void sys_generic_click_check_init(void)
 {
     g_lv_100ask_sys_generic_data.sound = 1;
-    lv_timer_t * timer = lv_timer_create(click_check_timer, LV_DEF_REFR_PERIOD, NULL);
+    lv_timer_create(click_check_timer, LV_DEF_REFR_PERIOD, NULL);
 }
 
 void sys_generic_set_sound(int16_t sound)
@@ -131,18 +131,21 @@ void sys_generic_set_sound(int16_t sound)
 
 static void click_check_timer(lv_timer_t * timer)
 {
-    static uint8_t buzzer_state = 0;
+    lv_indev_state_t indev_state = LV_INDEV_STATE_RELEASED;
 
-    lv_indev_t * indev = lv_indev_get_next(NULL);
-    if(indev == NULL)  return;
+    lv_indev_t * i = lv_indev_get_next(NULL);
+    if(i == NULL)  return;
 
-    lv_indev_state_t indev_state = lv_indev_get_state(indev);
+	while(i) {
+		indev_state = lv_indev_get_state(i);
+		if(indev_state == LV_INDEV_STATE_PRESSED) break;
+
+		i = lv_indev_get_next(i);
+	}
 
     if(indev_state == LV_INDEV_STATE_PRESSED)
     {
-#if LV_100ASK_GENERIC_UI_HAS_LOCK_SCREEN
         set_page_lock_screen_reset();
-#endif
     }
 }
 
