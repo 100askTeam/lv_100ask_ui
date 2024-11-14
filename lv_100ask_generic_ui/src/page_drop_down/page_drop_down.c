@@ -49,7 +49,6 @@
 #include "driver_passive_buzzer.h"
 #include "driver_ws28xx.h"
 #include "driver_ir_receiver.h"
-#include "driver_ec11.h"
 #include "driver_aht20.h"
 
 #elif LV_100ASK_GENERIC_UI_USE_SIMULATOR

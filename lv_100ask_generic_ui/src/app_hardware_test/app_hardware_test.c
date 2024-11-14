@@ -51,7 +51,6 @@
 #include "driver_passive_buzzer.h"
 #include "driver_ws28xx.h"
 #include "driver_ir_receiver.h"
-#include "driver_ec11.h"
 #include "driver_aht20.h"
 #include "driver_w800.h"
 
@@ -745,17 +744,7 @@ static void update_ec11_timer(lv_timer_t * timer)
     lv_obj_t * arc = lv_timer_get_user_data(timer);
 
 #if LV_100ASK_GENERIC_UI_DshanMCUH7R_NoRTOS
-    int8_t encoder_diff = ec11_scan();
-    int32_t last_arc_value = lv_arc_get_value(arc);
-    if (encoder_diff == 1)
-        lv_arc_set_value(arc, last_arc_value+10);
-    else if (encoder_diff == -1)
-        lv_arc_set_value(arc, last_arc_value-10);
 
-    if (GPIO_PIN_RESET == HAL_GPIO_ReadPin(EC11_D_GPIO_Port, EC11_D_Pin))
-    {
-        lv_arc_set_value(arc, 0);
-    }
 #elif LV_100ASK_GENERIC_UI_USE_SIMULATOR
     int8_t encoder_diff = lv_rand(0, 2);
     if (encoder_diff == 1)
