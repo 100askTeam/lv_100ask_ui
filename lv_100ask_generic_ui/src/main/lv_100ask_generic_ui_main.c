@@ -170,11 +170,9 @@ void lv_100ask_generic_ui(void)
     ///////////////////////////////////
 #if LV_100ASK_GENERIC_UI_HAS_LOCK_SCREEN
     page_lock_screen_init();
+#endif
 
-#if LV_100ASK_GENERIC_UI_USE_SIMULATOR
     sys_generic_click_check_init();
-#endif
-#endif
 
     ////////////////////////////////////////////////// page drop down
     g_lv_100ask_desktop_data.cont_drop_down_page = page_drop_down_init();

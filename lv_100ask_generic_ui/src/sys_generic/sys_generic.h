@@ -35,7 +35,9 @@ void lv_100ask_boot_animation(uint32_t delay);
 
 void sys_generic_click_check_init(void);
 
-void sys_generic_set_sound(int16_t sound);
+void sys_generic_set_sound(uint16_t sound);
+
+uint16_t sys_generic_get_sound(void);
 
 /**********************
  *      MACROS

@@ -52,7 +52,7 @@
 LV_IMG_DECLARE(img_lv_100ask_demo_logo);
 
 typedef struct {
-    int16_t sound;  // 0: close
+	uint16_t sound;  // 0: close
 }lv_100ask_sys_generic_data_t;
 
 /**********************
@@ -116,14 +116,20 @@ void lv_100ask_boot_animation(uint32_t delay)
 void sys_generic_click_check_init(void)
 {
     g_lv_100ask_sys_generic_data.sound = 1;
+#if LV_100ASK_GENERIC_UI_USE_SIMULATOR
     lv_timer_create(click_check_timer, LV_DEF_REFR_PERIOD, NULL);
+#endif
 }
 
-void sys_generic_set_sound(int16_t sound)
+void sys_generic_set_sound(uint16_t sound)
 {
     g_lv_100ask_sys_generic_data.sound = sound;
 }
 
+uint16_t sys_generic_get_sound(void)
+{
+    return g_lv_100ask_sys_generic_data.sound;
+}
 
 /**********************
  *  STATIC FUNCTIONS
@@ -145,7 +151,9 @@ static void click_check_timer(lv_timer_t * timer)
 
     if(indev_state == LV_INDEV_STATE_PRESSED)
     {
+#if LV_100ASK_GENERIC_UI_HAS_LOCK_SCREEN
         set_page_lock_screen_reset();
+#endif
     }
 }
 
