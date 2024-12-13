@@ -53,6 +53,7 @@
 #include "driver_ir_receiver.h"
 #include "driver_aht20.h"
 #include "driver_w800.h"
+#include "driver_rotary_encoder.h"
 
 #elif LV_100ASK_GENERIC_UI_USE_SIMULATOR
 
@@ -744,6 +745,16 @@ static void update_ec11_timer(lv_timer_t * timer)
     lv_obj_t * arc = lv_timer_get_user_data(timer);
 
 #if LV_100ASK_GENERIC_UI_DshanMCUH7R_NoRTOS
+    int32_t diff;
+	int32_t key;
+
+	RotaryEncoder_Read(&diff, &key);
+	if(diff < 0)
+		lv_arc_set_value(arc, lv_arc_get_value(arc)+10);
+	else if(diff > 0)
+		lv_arc_set_value(arc, lv_arc_get_value(arc)-10);
+	else if (key == 1)
+		lv_arc_set_value(arc, 0);
 
 #elif LV_100ASK_GENERIC_UI_USE_SIMULATOR
     int8_t encoder_diff = lv_rand(0, 2);
